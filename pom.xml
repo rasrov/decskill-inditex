@@ -5,30 +5,54 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.1-SNAPSHOT</version>
+		<version>3.4.0</version>
 		<relativePath/>
 	</parent>
 	<groupId>rasrov.decskill.inditex</groupId>
 	<artifactId>decskill-inditex</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<name>decskill-inditex</name>
 	<description>Decskill inditex proog</description>
+
+	<modules>
+		<module>application</module>
+		<module>boot</module>
+		<module>domain</module>
+		<module>infrastructure</module>
+	</modules>
 
 	<properties>
 		<java.version>21</java.version>
 	</properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
+	<dependencyManagement>
+		<dependencies>
+			<!-- MODULES -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>decskill-inditex-application</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>decskill-inditex-boot</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>decskill-inditex-domain</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>decskill-inditex-infrastructure</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 </project>
