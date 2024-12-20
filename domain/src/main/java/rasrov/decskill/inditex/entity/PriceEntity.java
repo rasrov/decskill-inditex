@@ -44,6 +44,4 @@ public class PriceEntity {
     @JoinColumn(name = "product_id")
     private ProductEntity product;
 
-    @ManyToOne
-
 }
