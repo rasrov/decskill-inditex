@@ -3,10 +3,10 @@ package rasrov.decskill.inditex.serviceport;
 import rasrov.decskill.inditex.entity.PriceEntity;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 public interface PriceServicePort {
 
-    List<PriceEntity> findPrices(Integer brandId, Integer productId, LocalDateTime startDate);
+    Set<PriceEntity> findPrices(Integer brandId, Integer productId, LocalDateTime startDate, LocalDateTime endDate);
 
 }

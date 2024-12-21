@@ -15,6 +15,10 @@
         <!-- CORE -->
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>decskill-inditex-application</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>decskill-inditex-domain</artifactId>
         </dependency>
         <dependency>

@@ -12,6 +12,10 @@
     <artifactId>decskill-inditex-application</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>decskill-inditex-domain</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

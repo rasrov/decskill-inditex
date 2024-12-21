@@ -16,4 +16,7 @@ public class ProductEntity {
     @Column(name = "name")
     private String name;
 
+    public Integer getId() {
+        return id;
+    }
 }

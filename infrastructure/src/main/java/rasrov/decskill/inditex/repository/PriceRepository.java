@@ -4,11 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import rasrov.decskill.inditex.entity.PriceEntity;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 public interface PriceRepository extends JpaRepository<PriceEntity, Integer> {
 
-    List<PriceEntity> findByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+    Set<PriceEntity> findByBrandIdAndProductIdAndStartDateGreaterThanEqualAndEndDateLessThanEqual(
             Integer brandId,
             Integer productId,
             LocalDateTime startDate,

@@ -16,4 +16,7 @@ public class PriceListEntity {
     @Column(name = "fee")
     private Integer fee;
 
+    public Integer getFee() {
+        return fee;
+    }
 }

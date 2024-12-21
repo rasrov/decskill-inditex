@@ -22,6 +22,7 @@ CREATE TABLE PRODUCT (
 );
 
 CREATE TABLE PRICES (
+    id integer NOT NULL,
 	brand_id integer NOT NULL,
 	start_date timestamp NOT NULL,
 	end_date timestamp NOT NULL,
@@ -46,7 +47,7 @@ INSERT INTO PRODUCT (id, name) VALUES (35455, 'SUETER');
 INSERT INTO PRODUCT (id, name) VALUES (35456, 'ABRIGO');
 INSERT INTO PRODUCT (id, name) VALUES (35457, 'SUDADERA');
 
-INSERT INTO PRICES (brand_id, start_date, end_date, price_id, product_id, priority, price, curr) VALUES (1, '2020-06-14T00:00:00', '2020-12-31T23:59:59', 1, 35455, 0, 35.50, 'EUR');
-INSERT INTO PRICES (brand_id, start_date, end_date, price_id, product_id, priority, price, curr) VALUES (1, '2020-06-14T15:00:00', '2020-06-14T18:30:00', 1, 35455, 0, 35.50, 'EUR');
-INSERT INTO PRICES (brand_id, start_date, end_date, price_id, product_id, priority, price, curr) VALUES (1, '2020-06-15T00:00:00', '2020-06-15T11:00:00', 1, 35455, 0, 35.50, 'EUR');
-INSERT INTO PRICES (brand_id, start_date, end_date, price_id, product_id, priority, price, curr) VALUES (1, '2020-06-15T16:00:00', '2020-12-31T23:59:59', 1, 35455, 0, 35.50, 'EUR');
+INSERT INTO PRICES (id, brand_id, start_date, end_date, price_id, product_id, priority, price, curr) VALUES (1, 1, '2020-06-14T00:00:00', '2024-12-31T23:59:59', 0, 35455, 0, 35.50, 'EUR');
+INSERT INTO PRICES (id, brand_id, start_date, end_date, price_id, product_id, priority, price, curr) VALUES (2, 1, '2020-06-14T15:00:00', '2024-06-14T18:30:00', 1, 35455, 0, 25.45, 'EUR');
+INSERT INTO PRICES (id, brand_id, start_date, end_date, price_id, product_id, priority, price, curr) VALUES (3, 1, '2020-06-15T00:00:00', '2024-06-15T11:00:00', 1, 35455, 0, 30.50, 'EUR');
+INSERT INTO PRICES (id, brand_id, start_date, end_date, price_id, product_id, priority, price, curr) VALUES (4, 1, '2020-06-15T16:00:00', '2024-12-31T23:59:59', 1, 35455, 0, 38.95, 'EUR');

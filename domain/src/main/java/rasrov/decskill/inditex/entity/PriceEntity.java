@@ -8,8 +8,13 @@ import java.time.LocalDateTime;
 @Table(name = "PRICES")
 public class PriceEntity {
 
-    @Column(name = "brand_id")
-    private Integer brandId;
+    @Id
+    @Column(name = "id")
+    private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id")
+    private BrandEntity brand;
 
     @Column(name = "start_date")
     private LocalDateTime startDate;
@@ -17,11 +22,13 @@ public class PriceEntity {
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
-    @Column(name = "price_id")
-    private Integer priceId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "price_id")
+    private PriceListEntity priceList;
 
-    @Column(name = "product_id")
-    private Integer productId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private ProductEntity product;
 
     @Column(name = "priority")
     private Integer priority;
@@ -32,16 +39,31 @@ public class PriceEntity {
     @Column(name = "curr")
     private String currency;
 
-    @ManyToOne
-    @JoinColumn(name = "brand_id")
-    private BrandEntity brand;
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "price_id")
-    private PriceListEntity priceList;
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private ProductEntity product;
+    public Integer getPriority() {
+        return priority;
+    }
 
+    public PriceListEntity getPriceList() {
+        return priceList;
+    }
+
+    public BrandEntity getBrand() {
+        return brand;
+    }
+
+    public ProductEntity getProduct() {
+        return product;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
 }
