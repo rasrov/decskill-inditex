@@ -39,6 +39,21 @@ public class PriceEntity {
     @Column(name = "curr")
     private String currency;
 
+    public PriceEntity() {
+    }
+
+    public PriceEntity(Integer id, BrandEntity brand, LocalDateTime startDate, LocalDateTime endDate, PriceListEntity priceList, Integer priority, Double price, ProductEntity product, String currency) {
+        this.id = id;
+        this.brand = brand;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.priceList = priceList;
+        this.priority = priority;
+        this.price = price;
+        this.product = product;
+        this.currency = currency;
+    }
+
     public LocalDateTime getStartDate() {
         return startDate;
     }

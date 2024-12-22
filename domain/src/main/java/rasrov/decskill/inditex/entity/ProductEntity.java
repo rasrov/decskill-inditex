@@ -16,6 +16,14 @@ public class ProductEntity {
     @Column(name = "name")
     private String name;
 
+    public ProductEntity() {
+    }
+
+    public ProductEntity(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }

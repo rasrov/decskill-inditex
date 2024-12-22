@@ -16,6 +16,14 @@ public class BrandEntity {
     @Column(name = "name")
     private String name;
 
+    public BrandEntity() {
+    }
+
+    public BrandEntity(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Integer getId() {
         return id;
     }
