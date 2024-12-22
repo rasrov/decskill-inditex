@@ -16,3 +16,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: none
+
+cache:
+  duration: 360
+  maxSize: 100
