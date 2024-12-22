@@ -1,5 +1,6 @@
 package rasrov.decskill.inditex.adapter;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import rasrov.decskill.inditex.api.PriceService;
 import rasrov.decskill.inditex.entity.EffectiveDates;
@@ -22,6 +23,7 @@ public class PriceServiceAdapter implements PriceService {
     }
 
     @Override
+    @Cacheable("prices")
     public PriceResponse findPrice(final Integer brandId, final Integer productId, final LocalDateTime startDate) {
         final LocalDateTime endDate = LocalDateTime.now();
         final Set<PriceEntity> prices = priceServicePort.findPrices(brandId, productId, startDate, endDate);
