@@ -1,6 +1,5 @@
 package rasrov.decskill.inditex.adapter;
 
-import jakarta.websocket.server.ServerEndpoint;
 import org.springframework.stereotype.Service;
 import rasrov.decskill.inditex.entity.PriceEntity;
 import rasrov.decskill.inditex.repository.PriceRepository;
