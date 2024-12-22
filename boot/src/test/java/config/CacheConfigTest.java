@@ -31,6 +31,8 @@ public class CacheConfigTest {
     void cache_config_should_be_init_properly() {
         assertThat(cacheConfig).isNotNull();
         assertThat(cacheConfig.duration()).isNotNull();
+        assertThat(cacheConfig.duration()).isEqualTo(15);
+        assertThat(cacheConfig.maxSize()).isEqualTo(15);
         assertThat(cacheConfig.maxSize()).isNotNull();
 
         assertThat(caffeine).isNotNull();
