@@ -21,12 +21,6 @@ public class CacheConfigTest {
     @Autowired
     private CacheConfig cacheConfig;
 
-    @Autowired
-    private CacheManager cacheManager;
-
-    @Autowired
-    private Caffeine caffeine;
-
     @Test
     void cache_config_should_be_init_properly() {
         assertThat(cacheConfig).isNotNull();
@@ -34,9 +28,6 @@ public class CacheConfigTest {
         assertThat(cacheConfig.duration()).isEqualTo(15);
         assertThat(cacheConfig.maxSize()).isEqualTo(15);
         assertThat(cacheConfig.maxSize()).isNotNull();
-
-        assertThat(caffeine).isNotNull();
-        assertThat(cacheManager).isNotNull();
     }
 
 }

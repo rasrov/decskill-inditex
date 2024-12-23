@@ -1,6 +1,8 @@
 package rasrov.decskill.inditex.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import rasrov.decskill.inditex.entity.PriceEntity;
 
 import java.time.LocalDateTime;
@@ -8,11 +10,17 @@ import java.util.Set;
 
 public interface PriceRepository extends JpaRepository<PriceEntity, Integer> {
 
-    Set<PriceEntity> findByBrandIdAndProductIdAndStartDateGreaterThanEqualAndEndDateLessThanEqual(
-            Integer brandId,
-            Integer productId,
-            LocalDateTime startDate,
-            LocalDateTime endDate
+    @Query(value = """
+            SELECT *
+            FROM PRICES p
+            WHERE p.BRAND_ID = :brandId
+            AND p.PRODUCT_ID = :productId
+            AND :dateTime BETWEEN p.START_DATE AND p.END_DATE
+            """, nativeQuery = true)
+    Set<PriceEntity> findByBrandIdAndProductIdAndDateTimeBetween(
+            @Param("brandId") Integer brandId,
+            @Param("productId") Integer productId,
+            @Param("dateTime") LocalDateTime dateTime
     );
 
 }

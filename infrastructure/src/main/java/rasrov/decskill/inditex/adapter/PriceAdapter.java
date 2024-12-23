@@ -18,9 +18,9 @@ public class PriceAdapter implements PriceServicePort {
     }
 
     @Override
-    public Set<PriceEntity> findPrices(final Integer brandId, final Integer productId, final LocalDateTime startDate, final LocalDateTime endDate) {
-        return priceRepository.findByBrandIdAndProductIdAndStartDateGreaterThanEqualAndEndDateLessThanEqual(
-                brandId, productId, startDate, endDate);
+    public Set<PriceEntity> findPrices(final Integer brandId, final Integer productId, final LocalDateTime dateTime) {
+        return priceRepository.findByBrandIdAndProductIdAndDateTimeBetween(
+                brandId, productId, dateTime);
     }
 
 }

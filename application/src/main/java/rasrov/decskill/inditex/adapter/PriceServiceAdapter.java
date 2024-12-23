@@ -24,31 +24,34 @@ public class PriceServiceAdapter implements PriceService {
 
     @Override
     @Cacheable("prices")
-    public PriceResponse findPrice(final Integer brandId, final Integer productId, final LocalDateTime startDate) {
-        final LocalDateTime endDate = LocalDateTime.now();
-        final Set<PriceEntity> prices = priceServicePort.findPrices(brandId, productId, startDate, endDate);
+    public PriceResponse findPrice(final Integer brandId, final Integer productId, final LocalDateTime dateTime) {
+        final Set<PriceEntity> prices = priceServicePort.findPrices(brandId, productId, dateTime);
 
         return prices.stream()
-                .min(Comparator.comparingInt(PriceEntity::getPriority))
+                .max(Comparator.comparingInt(PriceEntity::getPriority))
                 .map(this::buildPrice)
-                .orElse(buildPriceResponseErrorMessage(brandId, productId, startDate, endDate));
+                .orElse(buildPriceResponseErrorMessage(brandId, productId, dateTime));
     }
 
     private PriceResponse buildPrice(final PriceEntity priceEntity) {
         final Integer fee = priceEntity.getPriceList().getFee();
-        final Double pvpPrice = priceEntity.getPrice() * calculatePercentageFee(fee);
+        final Double pvpPrice = roundPrice(priceEntity.getPrice() * calculatePercentageFee(fee));
         final EffectiveDates effectiveDates = new EffectiveDates(priceEntity.getStartDate(), priceEntity.getEndDate());
 
         return new PriceResponse(priceEntity.getProduct().getId(), priceEntity.getBrand().getId(), fee, effectiveDates, pvpPrice, null);
     }
 
-    private PriceResponse buildPriceResponseErrorMessage(final Integer brandId, final Integer productId, final LocalDateTime startDate, final LocalDateTime endDate) {
+    private PriceResponse buildPriceResponseErrorMessage(final Integer brandId, final Integer productId, final LocalDateTime dateTime) {
         return new PriceResponse(null, null, null, null, null,
-                new ErrorResponse(String.format("Not found any active price with brand id %s, product id %s, start date %s and end date %s",
-                        brandId, productId, startDate, endDate)));
+                new ErrorResponse(String.format("Not found any active price with brand id %s, product id %s and %s date",
+                        brandId, productId, dateTime)));
     }
 
     private Double calculatePercentageFee(final Integer fee) {
         return 1.0 + fee / 100.0;
+    }
+
+    private Double roundPrice(final Double pvpPrice) {
+        return Math.round(pvpPrice * 1000.0) / 1000.0;
     }
 }

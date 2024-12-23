@@ -11,12 +11,11 @@ import rasrov.decskill.inditex.entity.*;
 import rasrov.decskill.inditex.serviceport.PriceServicePort;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.extractProperty;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 
@@ -45,11 +44,11 @@ public class PriceServiceAdapterTest {
     void should_return_empty_prices_but_with_a_warning_message() {
         final Integer brandId = 1;
         final Integer productId = 333;
-        final LocalDateTime startDate = LocalDateTime.now();
+        final LocalDateTime dateTime = LocalDateTime.now();
 
-        given(priceServicePort.findPrices(eq(brandId), eq(productId), eq(startDate), any(LocalDateTime.class))).willReturn(Set.of());
+        given(priceServicePort.findPrices(eq(brandId), eq(productId), eq(dateTime))).willReturn(Set.of());
 
-        final PriceResponse price = priceServiceAdapter.findPrice(brandId, productId, startDate);
+        final PriceResponse price = priceServiceAdapter.findPrice(brandId, productId, dateTime);
 
         assertAll(
                 "Assert error message not empty",
@@ -59,8 +58,8 @@ public class PriceServiceAdapterTest {
                 () -> assertThat(price.effectiveDates()).isNull(),
                 () -> assertThat(price.price()).isNull(),
                 () -> assertThat(price.error()).isNotNull(),
-                () -> assertThat(price.error().message()).isNotEmpty(),
-                () -> assertThat(price.error().message()).contains("Not found any active price with")
+                () -> assertThat(Objects.requireNonNull(price.error()).message()).isNotEmpty(),
+                () -> assertThat(Objects.requireNonNull(price.error()).message()).contains("Not found any active price with")
         );
     }
 
@@ -81,7 +80,7 @@ public class PriceServiceAdapterTest {
         final PriceEntity secondPriceEntity = new PriceEntity(1, brandEntity, startDate, startDate.plusDays(2), new PriceListEntity(1, 10), 1, 20.0, productEntity, "EUR");
         final PriceEntity thirdPriceEntity = new PriceEntity(1, brandEntity, startDate, startDate.plusDays(3), new PriceListEntity(1, 15), 2, 30.0, productEntity, "EUR");
 
-        given(priceServicePort.findPrices(eq(brandId), eq(productId), eq(startDate), any(LocalDateTime.class))).willReturn(Set.of(firstPriceEntity, secondPriceEntity, thirdPriceEntity));
+        given(priceServicePort.findPrices(eq(brandId), eq(productId), eq(startDate))).willReturn(Set.of(firstPriceEntity, secondPriceEntity, thirdPriceEntity));
 
         final PriceResponse price = priceServiceAdapter.findPrice(brandId, productId, startDate);
 
@@ -89,19 +88,13 @@ public class PriceServiceAdapterTest {
                 "Assert highest price data",
                 () -> assertThat(price.productId()).isEqualTo(productId),
                 () -> assertThat(price.brandId()).isEqualTo(brandId),
-                () -> assertThat(price.fee()).isEqualTo(fee),
+                () -> assertThat(price.fee()).isEqualTo(15),
                 () -> assertThat(price.effectiveDates()).isNotNull(),
-                () -> assertThat(price.effectiveDates().startDate()).isEqualTo(startDate),
-                () -> assertThat(price.effectiveDates().endDate()).isEqualTo(endDate),
-                () -> assertThat(price.price()).isEqualTo(calculatePvpPrice(fee, priceAmount)),
+                () -> assertThat(Objects.requireNonNull(price.effectiveDates()).startDate()).isEqualTo(startDate),
+                () -> assertThat(Objects.requireNonNull(price.effectiveDates()).endDate()).isEqualTo(startDate.plusDays(3)),
+                () -> assertThat(price.price()).isEqualTo(34.5),
                 () -> assertThat(price.error()).isNull()
         );
-    }
-
-    private Double calculatePvpPrice(final Integer fee, final Double price) {
-        final Double realFee = 1.0 + fee / 100.0;
-
-        return price * realFee;
     }
 
 }

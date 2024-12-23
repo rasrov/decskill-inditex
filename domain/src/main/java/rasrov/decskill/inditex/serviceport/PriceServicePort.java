@@ -7,6 +7,6 @@ import java.util.Set;
 
 public interface PriceServicePort {
 
-    Set<PriceEntity> findPrices(Integer brandId, Integer productId, LocalDateTime startDate, LocalDateTime endDate);
+    Set<PriceEntity> findPrices(Integer brandId, Integer productId, LocalDateTime dateTime);
 
 }

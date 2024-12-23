@@ -16,6 +16,11 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: none
+  level:
+    org:
+      springframework:
+        web: DEBUG
+        validation: DEBUG
 
 cache:
   duration: 360

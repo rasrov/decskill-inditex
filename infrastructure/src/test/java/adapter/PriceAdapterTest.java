@@ -43,13 +43,12 @@ public class PriceAdapterTest {
     void should_return_empty_set_when_data_not_found() {
         final Integer brandId = 1;
         final Integer productId = 333;
-        final LocalDateTime startDate = LocalDateTime.now();
-        final LocalDateTime endDate = startDate.plusDays(1);
+        final LocalDateTime dateTime = LocalDateTime.now();
 
-        given(priceRepository.findByBrandIdAndProductIdAndStartDateGreaterThanEqualAndEndDateLessThanEqual(eq(brandId), eq(productId), eq(startDate), eq(endDate)))
+        given(priceRepository.findByBrandIdAndProductIdAndDateTimeBetween(eq(brandId), eq(productId), eq(dateTime)))
                 .willReturn(Set.of());
 
-        final Set<PriceEntity> prices = priceAdapter.findPrices(brandId, productId, startDate, endDate);
+        final Set<PriceEntity> prices = priceAdapter.findPrices(brandId, productId, dateTime);
         assertThat(prices).isEmpty();
     }
 
@@ -57,13 +56,12 @@ public class PriceAdapterTest {
     void should_return_price_when_data_found() {
         final Integer brandId = 1;
         final Integer productId = 333;
-        final LocalDateTime startDate = LocalDateTime.now();
-        final LocalDateTime endDate = startDate.plusDays(1);
+        final LocalDateTime dateTime = LocalDateTime.now();
 
-        given(priceRepository.findByBrandIdAndProductIdAndStartDateGreaterThanEqualAndEndDateLessThanEqual(eq(brandId), eq(productId), eq(startDate), eq(endDate)))
+        given(priceRepository.findByBrandIdAndProductIdAndDateTimeBetween(eq(brandId), eq(productId), eq(dateTime)))
                 .willReturn(Set.of(new PriceEntity()));
 
-        final Set<PriceEntity> prices = priceAdapter.findPrices(brandId, productId, startDate, endDate);
+        final Set<PriceEntity> prices = priceAdapter.findPrices(brandId, productId, dateTime);
         assertThat(prices).isNotEmpty();
     }
 
